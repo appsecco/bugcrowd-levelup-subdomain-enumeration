@@ -4,6 +4,12 @@
 
 from __future__ import print_function
 
+__author__  = "Bharath(github.com/yamakira)"
+__version__ = "0.1"
+__purpose__ = "Extract subdomains for a domain from censys certificate dataset"
+
+import re
+import sys
 import logging
 
 logging.basicConfig(
@@ -11,22 +17,14 @@ logging.basicConfig(
     format="%(message)s"
     )
 
-__author__  = "Bharath(github.com/yamakira)"
-__version__ = "0.1"
-__purpose__ = "Extract subdomains for a domain from censys certificate dataset"
-
-CENSYS_API_ID = ""
-CENSYS_API_SECRET = ""
-
-import argparse
-import re
-import sys
-
 try:
     import censys.certificates
 except ImportError:
     logging.info("\033[1;31m[!] Failed to import censys module. Run 'pip install censys'\033[1;m")
     sys.exit()
+
+CENSYS_API_ID = ""      # Provide your Censys API ID
+CENSYS_API_SECRET = ""  # Provide your Censys API Secret
 
 def get_certificates(domain):
     if not CENSYS_API_ID or not CENSYS_API_SECRET:
