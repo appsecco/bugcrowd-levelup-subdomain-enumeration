@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # Created using Metafidv2 by Matthew Bryant (mandatory)
 # Unauthorized use is stricly prohibited, please contact mandatory@gmail.com with questions/comments.
+from __future__ import print_function
 import requests
 import getpass
 import json
@@ -76,7 +77,7 @@ class cloudflare_enum:
         data = json.loads( r.text )
         success = data['success']
         if not success:
-            print r.text
+            print( r.text )
             return False
 
         request_id = data['result']['id']
@@ -135,7 +136,7 @@ class cloudflare_enum:
 
     def print_banner( self ):
         if self.verbose:
-            print """
+            print("""
             
                                                      `..--------..`                               
                                                  .-:///::------::///:.`                           
@@ -161,23 +162,22 @@ class cloudflare_enum:
                                                              Cloudflare DNS Enumeration Tool v1.3
                                                                              Created by mandatory
                                                                              Modified by yamakira
-        """
-
+        """ )
 
     def pprint( self, input_dict ):
-        print json.dumps(input_dict, sort_keys=True, indent=4, separators=(',', ': '))
+        print( json.dumps(input_dict, sort_keys=True, indent=4, separators=(',', ': ')) )
 
     def statusmsg( self, msg ):
         if self.verbose:
-            print "[ STATUS ] " + msg
+            print( "[ STATUS ] " + msg )
 
     def errormsg( self, msg ):
         if self.verbose:
-            print "[ ERROR ] " + msg
+            print( "[ ERROR ] " + msg )
 
     def successmsg( self, msg ):
         if self.verbose:
-            print "[ SUCCESS ] " + msg
+            print( "[ SUCCESS ] " + msg )
 
     def find_between_r( self, s, first, last ):
         try:
@@ -214,7 +214,7 @@ class cloudflare_enum:
 
 if __name__ == "__main__":
     if len( sys.argv ) < 2:
-        print "Usage: " + sys.argv[0] + " username@email.com domain.com"
+        print( "Usage: " + sys.argv[0] + " username@email.com domain.com" )
     else:
         cloud = cloudflare_enum()
         username,password = cloud.get_creds()
