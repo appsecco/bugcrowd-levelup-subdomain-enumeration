@@ -8,7 +8,7 @@ Slides are available at: https://speakerdeck.com/yamakira/esoteric-sub-domain-en
 
 ### Video
 
-Coming Soon
+https://youtu.be/e_Gq99CKAys
 
 ### Feedback/Suggestions
 
