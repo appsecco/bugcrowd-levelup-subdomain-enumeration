@@ -4,7 +4,7 @@ This repository contains all the talk materials, videos and scripts from the tal
 
 ### Presentation
 
-Slides are available at: https://speakerdeck.com/yamakira/esoteric-sub-domain-enumeration-tecnhiques
+Slides are available at: https://speakerdeck.com/yamakira/esoteric-sub-domain-enumeration-techniques
 
 ### Video
 
