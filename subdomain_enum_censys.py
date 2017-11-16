@@ -1,15 +1,9 @@
 # A script to extract domain names from related SSL/TLS certificates using Censys
-# Requires Censys API ID and API Secret to be able to extract SSL/TLS certificates
-# Requires censys module. Run "pip install censys" to install.
+# You'll need Censys API ID and API Secret to be able to extract SSL/TLS certificates
+# Needs censys module to run. pip install censys.
 
 from __future__ import print_function
 
-__author__  = "Bharath(github.com/yamakira)"
-__version__ = "0.1"
-__purpose__ = "Extract subdomains for a domain from censys certificate dataset"
-
-import re
-import sys
 import logging
 
 logging.basicConfig(
@@ -17,14 +11,22 @@ logging.basicConfig(
     format="%(message)s"
     )
 
+__author__  = "Bharath(github.com/yamakira)"
+__version__ = "0.1"
+__purpose__ = "Extract subdomains for a domain from censys certificate dataset"
+
+CENSYS_API_ID = ""
+CENSYS_API_SECRET = ""
+
+import argparse
+import re
+import sys
+
 try:
     import censys.certificates
 except ImportError:
     logging.info("\033[1;31m[!] Failed to import censys module. Run 'pip install censys'\033[1;m")
     sys.exit()
-
-CENSYS_API_ID = ""      # Provide your Censys API ID
-CENSYS_API_SECRET = ""  # Provide your Censys API Secret
 
 def get_certificates(domain):
     if not CENSYS_API_ID or not CENSYS_API_SECRET:
@@ -40,12 +42,12 @@ def get_certificates(domain):
         sys.exit()
     return certificates
 
-def get_subdomains(certificates):
+def get_subdomains(domain, certificates):
     logging.info("[+] Extracting sub-domains for {} from certificates".format(domain))
     subdomains = []
     for certificate in certificates:
-        parsed_result = re.findall(r'(?<=CN=).*?(?=,)', certificate[u'parsed.subject_dn'])
-        if len(parsed_result) > 0: subdomains.append(parsed_result[0])
+        parsed_result = re.findall(r'(?<=CN=).*', certificate[u'parsed.subject_dn'])
+        if len(parsed_result) > 0 and domain in parsed_result[0]: subdomains.append(parsed_result[0])
     return subdomains
 
 def print_subdomains(subdomains):
@@ -66,5 +68,5 @@ def get_domain():
 if __name__ == '__main__':
     domain = get_domain()
     certificates = get_certificates(domain)
-    subdomains = get_subdomains(certificates)
+    subdomains = get_subdomains(domain, certificates)
     print_subdomains(subdomains)
